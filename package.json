@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build:dev": "prisma generate && vite build && vite build --ssr",
-    "build": "npx prisma generate --schema=schema.prod.prisma && vite build && vite build --ssr",
+    "build": "npx prisma generate --schema=prisma/schema.prod.prisma && vite build && vite build --ssr",
     "dev": "shopify app dev",
     "config:link": "shopify app config link",
     "generate": "shopify app generate",
