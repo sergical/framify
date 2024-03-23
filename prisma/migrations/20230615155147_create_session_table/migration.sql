@@ -5,7 +5,7 @@ CREATE TABLE "Session" (
     "state" TEXT NOT NULL,
     "isOnline" BOOLEAN NOT NULL DEFAULT false,
     "scope" TEXT,
-    "expires" TIMESTAMPTZ,
+    "expires" TIMESTAMP WITHOUT TIME ZONE,
     "accessToken" TEXT NOT NULL,
     "userId" BIGINT
 );
@@ -14,5 +14,6 @@ CREATE TABLE "Session" (
 CREATE TABLE "Wallets" (
     "id" SERIAL PRIMARY KEY,
     "shop" TEXT NOT NULL,
+    "fid"  TEXT NOT NULL,
     "address" TEXT NOT NULL
 );

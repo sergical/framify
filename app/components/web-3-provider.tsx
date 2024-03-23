@@ -1,10 +1,15 @@
+import React from "react";
 import {
   DynamicContextProvider,
   DynamicWidget,
 } from "@dynamic-labs/sdk-react-core";
 import { EthereumWalletConnectors } from "@dynamic-labs/ethereum";
 
-export default function Home() {
+export default function Web3Provider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <DynamicContextProvider
       settings={{
@@ -13,6 +18,7 @@ export default function Home() {
       }}
     >
       <DynamicWidget variant="modal" />
+      {children}
     </DynamicContextProvider>
   );
 }

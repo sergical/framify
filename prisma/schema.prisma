@@ -8,6 +8,11 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+// datasource db {
+//   provider = "sqlite"
+//   url      = "file:dev.sqlite"
+// }
+
 model Session {
   id          String    @id
   shop        String
@@ -17,4 +22,11 @@ model Session {
   expires     DateTime?
   accessToken String
   userId      BigInt?
+}
+
+model Wallet {
+  id      Int    @id @default(autoincrement())
+  fid     String
+  shop    String
+  address String
 }

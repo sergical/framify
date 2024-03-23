@@ -1,4 +1,5 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+import { installGlobals } from "@remix-run/node";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -34,6 +35,8 @@ if (host === "localhost") {
   };
 }
 
+installGlobals();
+
 export default defineConfig({
   server: {
     port: Number(process.env.PORT || 3000),
@@ -49,6 +52,9 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  ssr: {
+    noExternal: [/^@dynamic-labs.*/, /^@blocto.*/],
+  },
   build: {
     assetsInlineLimit: 0,
   },
