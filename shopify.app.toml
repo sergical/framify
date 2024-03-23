@@ -3,7 +3,7 @@
 client_id = "a60d244c671aea1b77910da29781c265"
 name = "Framify"
 handle = "framify"
-application_url = "https://milan-carries-mem-julia.trycloudflare.com"
+application_url = "https://coastal-logo-automated-reports.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_product_listings,read_products,unauthenticated_read_product_listi
 
 [auth]
 redirect_urls = [
-  "https://milan-carries-mem-julia.trycloudflare.com/auth/callback",
-  "https://milan-carries-mem-julia.trycloudflare.com/auth/shopify/callback",
-  "https://milan-carries-mem-julia.trycloudflare.com/api/auth/callback"
+  "https://coastal-logo-automated-reports.trycloudflare.com/auth/callback",
+  "https://coastal-logo-automated-reports.trycloudflare.com/auth/shopify/callback",
+  "https://coastal-logo-automated-reports.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

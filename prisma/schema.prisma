@@ -8,11 +8,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-// datasource db {
-//   provider = "sqlite"
-//   url      = "file:dev.sqlite"
-// }
-
 model Session {
   id          String    @id
   shop        String
@@ -29,4 +24,15 @@ model Wallet {
   fid     String
   shop    String
   address String
+}
+
+model Frame {
+  id      Int    @id @default(autoincrement())
+  fid     String
+  shop    String
+  name    String
+  address String
+  imageUrl String
+  checkoutUrl String @unique
+  price   Float
 }

@@ -1,3 +1,4 @@
+import { json } from "@remix-run/node";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
 import {
@@ -10,8 +11,9 @@ import {
   TextField,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
-import { Form, json, redirect, useLoaderData } from "@remix-run/react";
+import { Form, redirect, useLoaderData } from "@remix-run/react";
 import db from "../db.server";
+import { useState } from "react";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
@@ -20,16 +22,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     `#graphql
       query getShopUrl {
         shop {
-    url
-  }
-
+          url
+        }
       }`,
   );
+
   const responseJson = await response.json();
   const shopUrl = responseJson.data.shop.url;
 
+  const wallet = await db.wallet.findFirst({
+    where: {
+      shop: shopUrl,
+    },
+  });
+
   return json({
     shopUrl,
+    wallet,
   });
 };
 
@@ -39,17 +48,25 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
 
   // Validate the form data
-  const wallet = formData.get("wallet") as string;
+  const walletAddress = formData.get("walletAddress") as string;
   const fid = formData.get("fid") as string;
   const shop = formData.get("shop") as string;
-  if (!wallet || !fid) {
+  const walletId = Number(formData.get("walletId"));
+  if (!walletAddress || !fid) {
     throw new Error("Please fill out all fields");
   }
-  await db.wallet.create({
-    data: {
-      shop,
-      address: wallet,
-      fid,
+  await db.wallet.upsert({
+    where: {
+      id: walletId, // Assuming 'fid' is a unique identifier
+    },
+    update: {
+      address: walletAddress,
+      fid: fid,
+    },
+    create: {
+      shop: shop,
+      address: walletAddress,
+      fid: fid,
     },
   });
   // Redirect to dashboard if validation is successful
@@ -57,7 +74,9 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function Wallet() {
-  const { shopUrl } = useLoaderData<typeof loader>();
+  const { shopUrl, wallet } = useLoaderData<typeof loader>();
+  const [walletAddress, setWalletAddress] = useState(wallet?.address || "");
+  const [fid, setFid] = useState(wallet?.fid || "");
   return (
     <Page>
       <ui-title-bar title="Your wallet" />
@@ -72,15 +91,20 @@ export default function Wallet() {
                     id="fid"
                     name="fid"
                     autoComplete="off"
+                    value={fid}
+                    onChange={(value) => setFid(value)}
                   />
                   <TextField
                     label="Wallet Address"
-                    id="wallet"
-                    name="wallet"
+                    id="walletAddress"
+                    name="walletAddress"
                     autoComplete="off"
+                    value={walletAddress}
+                    onChange={(value) => setWalletAddress(value)}
                   />
                   <input type="hidden" name="shop" value={shopUrl} />
-                  <Button submit>Connect</Button>
+                  <input type="hidden" name="walletId" value={wallet?.id} />
+                  <Button submit>{wallet ? "Update" : "Connect"}</Button>
                 </FormLayout>
               </Form>
             </Card>
