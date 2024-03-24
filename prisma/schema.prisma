@@ -44,4 +44,5 @@ model Order {
   purchasedBy Int // Farcaster ID of the buyer
   emailAddress String
   timePlaced DateTime
+  transactionId String
 }
