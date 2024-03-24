@@ -164,6 +164,21 @@ export default function Frames() {
         });
       },
     },
+    {
+      content: "View frame",
+      onAction: () => {
+        const selectedProducts = selectedResources.map((id) =>
+          products.find((product) => product.id.toString() === id),
+        );
+
+        if (selectedProducts.length === 1) {
+          window.open(
+            `https://framify.xyz/${selectedProducts[0]?.frameId}`,
+            "_blank",
+          );
+        }
+      },
+    },
   ];
 
   const rowMarkup = products.map(
@@ -187,14 +202,14 @@ export default function Frames() {
             ${price.toFixed(2)}
           </Text>
         </IndexTable.Cell>
-        <IndexTable.Cell>
-          <Text as="span" numeric>
-            0.01
-          </Text>
-        </IndexTable.Cell>
+
         <IndexTable.Cell>
           <Text as="span" alignment="end" numeric>
-            <Badge>{frameId ? "Frame exists" : "No frame"}</Badge>
+            {frameId ? (
+              <Badge tone="success">You're based</Badge>
+            ) : (
+              <Badge>Create frame</Badge>
+            )}
           </Text>
         </IndexTable.Cell>
       </IndexTable.Row>
@@ -220,7 +235,7 @@ export default function Frames() {
                   { title: "Image" },
                   { title: "Name" },
                   { title: "Price" },
-                  { title: "ETH Price" },
+
                   { title: "Frame", alignment: "end" },
                 ]}
               >
