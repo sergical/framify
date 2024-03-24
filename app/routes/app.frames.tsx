@@ -105,7 +105,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
 
   const products: Product[] = JSON.parse(formData.get("products") as string);
-  console.log("products", products);
+
   for (const product of products) {
     await db.frame.upsert({
       where: {
@@ -138,7 +138,6 @@ export default function Frames() {
   const submit = useSubmit();
 
   const { products } = useLoaderData<typeof loader>();
-  console.log(products);
 
   const resourceName = {
     singular: "frame",
@@ -174,6 +173,21 @@ export default function Frames() {
         if (selectedProducts.length === 1) {
           window.open(
             `https://framify.xyz/${selectedProducts[0]?.frameId}`,
+            "_blank",
+          );
+        }
+      },
+    },
+    {
+      content: "Cast frame",
+      onAction: () => {
+        const selectedProducts = selectedResources.map((id) =>
+          products.find((product) => product.id.toString() === id),
+        );
+
+        if (selectedProducts.length === 1) {
+          window.open(
+            `https://warpcast.com/~/compose?text=Check%20out%20${selectedProducts[0]?.name}%20from%20@sergiy%20on%20https://framify.xyz%20!%20Or%20purchase%20right%20here&embeds[]=https://framify.xyz/${selectedProducts[0]?.frameId}`,
             "_blank",
           );
         }
