@@ -9,6 +9,8 @@ import {
   FormLayout,
   Button,
   TextField,
+  Text,
+  Link,
 } from "@shopify/polaris";
 import { authenticate } from "../shopify.server";
 import { Form, redirect, useLoaderData } from "@remix-run/react";
@@ -79,34 +81,46 @@ export default function Wallet() {
   const [fid, setFid] = useState(wallet?.fid || "");
   return (
     <Page>
-      <ui-title-bar title="Your wallet" />
+      <ui-title-bar title="Framify integration" />
       <BlockStack gap="500">
         <Layout>
           <Layout.Section>
             <Card>
-              <Form method="post">
-                <FormLayout>
-                  <TextField
-                    label="Farcaster ID"
-                    id="fid"
-                    name="fid"
-                    autoComplete="off"
-                    value={fid}
-                    onChange={(value) => setFid(value)}
-                  />
-                  <TextField
-                    label="Wallet Address"
-                    id="walletAddress"
-                    name="walletAddress"
-                    autoComplete="off"
-                    value={walletAddress}
-                    onChange={(value) => setWalletAddress(value)}
-                  />
-                  <input type="hidden" name="shop" value={shopUrl} />
-                  <input type="hidden" name="walletId" value={wallet?.id} />
-                  <Button submit>{wallet ? "Update" : "Connect"}</Button>
-                </FormLayout>
-              </Form>
+              <BlockStack gap="200">
+                <Text as="p">
+                  Get the required information from{" "}
+                  <Link
+                    target="_blank"
+                    url="https://framify.xyz/account/merchant"
+                  >
+                    Framify
+                  </Link>
+                </Text>
+                <BlockStack gap="500" />
+                <Form method="post">
+                  <FormLayout>
+                    <TextField
+                      label="Farcaster ID"
+                      id="fid"
+                      name="fid"
+                      autoComplete="off"
+                      value={fid}
+                      onChange={(value) => setFid(value)}
+                    />
+                    <TextField
+                      label="Wallet Address"
+                      id="walletAddress"
+                      name="walletAddress"
+                      autoComplete="off"
+                      value={walletAddress}
+                      onChange={(value) => setWalletAddress(value)}
+                    />
+                    <input type="hidden" name="shop" value={shopUrl} />
+                    <input type="hidden" name="walletId" value={wallet?.id} />
+                    <Button submit>{wallet ? "Update" : "Connect"}</Button>
+                  </FormLayout>
+                </Form>
+              </BlockStack>
             </Card>
           </Layout.Section>
         </Layout>

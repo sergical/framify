@@ -3,7 +3,7 @@
 client_id = "a60d244c671aea1b77910da29781c265"
 name = "Framify"
 handle = "framify"
-application_url = "https://crawford-glossary-bernard-dis.trycloudflare.com"
+application_url = "https://mixing-experiments-genome-guide.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_product_listings,read_products,unauthenticated_read_product_listi
 
 [auth]
 redirect_urls = [
-  "https://crawford-glossary-bernard-dis.trycloudflare.com/auth/callback",
-  "https://crawford-glossary-bernard-dis.trycloudflare.com/auth/shopify/callback",
-  "https://crawford-glossary-bernard-dis.trycloudflare.com/api/auth/callback"
+  "https://mixing-experiments-genome-guide.trycloudflare.com/auth/callback",
+  "https://mixing-experiments-genome-guide.trycloudflare.com/auth/shopify/callback",
+  "https://mixing-experiments-genome-guide.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]
